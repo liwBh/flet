@@ -1,0 +1,64 @@
+# ───── Python ───────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+*.spec
+*.log
+
+# Coverage / testing
+.coverage*
+htmlcov/
+.pytest_cache/
+.tox/
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Variables de entorno / secretos
+.env
+.env.*
+!.env.example
+
+# ───── Flet / Flutter empaquetados ──────────────────────
+.flet/                  # caché/binaries descargados por flet
+.flet-*/                # versiones específicas
+flutter_build/          # si generas cosas con flutter
+build/web/
+web_build/
+publish/                # salida de `flet publish` (ajusta si cambias)
+
+# ───── IDEs ─────────────────────────────────────────────
+# PyCharm / IntelliJ
+.idea/
+# VSCode
+.vscode/
+# JetBrains Fleet
+.fleet/
+
+# ───── SO / Exploradores ─────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ───── Docker (si lo usas) ──────────────────────────────
+docker-compose.override.yml
+*.pid
+
+# ───── Otros opcionales ─────────────────────────────────
+# Node / front tools (si integras algo)
+node_modules/
+package-lock.json
+yarn.lock

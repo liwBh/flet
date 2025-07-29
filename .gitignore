@@ -1,0 +1,41 @@
+# -----------------------------
+#  Entornos virtuales Python
+# -----------------------------
+.venv/
+venv/
+env/
+
+# -----------------------------
+#  Variables de entorno
+# -----------------------------
+.env
+.env.*
+
+# -----------------------------
+#  Configuración de IDEs/editores
+# -----------------------------
+.idea/
+.vscode/
+*.code-workspace
+
+# -----------------------------
+#  Almacenamiento local de Flet
+# -----------------------------
+storage/
+
+# -----------------------------
+#  Caché y artefactos de Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.mypy_cache/
+.pytest_cache/
+
+# -----------------------------
+#  Archivos de sistema
+# -----------------------------
+.DS_Store
+Thumbs.db
+*.log
