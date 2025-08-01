@@ -1,5 +1,7 @@
 import flet as ft
 import random
+
+# Containers - clickable and not
 def container_clickable():
     return ft.Column(
         [
@@ -55,6 +57,8 @@ def container_clickable():
             )],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
+
+# Containers - blur
 def change_img(e, page, img_container):
     index = random.randint(1, 1000)
     img_container.image = ft.DecorationImage(
@@ -114,6 +118,8 @@ def container_blur(page):
             )],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
+
+# Containers - hover
 def on_hover(e):
     e.control.bgcolor = "blue" if e.data == "true" else "red"
     e.control.update()
@@ -142,6 +148,7 @@ def build_view_container(page: ft.Page) -> ft.Container:
                 container_blur(page),
                 ft.Divider(),
                 container_hover(),
+                ft.Divider(),
             ],
             spacing=30,
             scroll=ft.ScrollMode.AUTO,
