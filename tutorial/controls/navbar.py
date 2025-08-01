@@ -21,7 +21,7 @@ class NavBar(ft.Container):
         elif idx == 2:
             self.page.go("/card")
         elif idx == 3:
-            self.page.go("/notifications")
+            self.page.go("/theme")
 
 
     def navbar_bottom(self, page):
@@ -59,7 +59,7 @@ class NavBar(ft.Container):
                     icon=ft.Icons.CHECK_BOX_OUTLINE_BLANK_ROUNDED, label="Card"
                 ),
                 ft.NavigationDrawerDestination(
-                    icon=ft.Icons.NOTIFICATIONS_NONE, label="Notifications"
+                    icon=ft.Icons.PALETTE, label="Theme"
                 ),
             ],
             on_change=self.change_tab
