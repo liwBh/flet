@@ -22,7 +22,7 @@ app_font = {
 def init(page):
     page.title = "Hangman"
     page.fonts = app_font
-    page.theme = ft.Theme(font_family="zpix")
+    # page.theme = ft.Theme(font_family="zpix")
     page.window.width = app_size["width"]
     page.window.height = app_size["height"]
     page.window.resizable = False
