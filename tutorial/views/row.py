@@ -35,11 +35,13 @@ def width_slider_change(e, row, text, slider):
     row.update()
     text.update()
 
+
 def toggle_wrap(e, row, text):
     row.wrap = bool(e.control.value)
     text.value = f"width={str(row.width)}, wrap={str(row.wrap)}"
     row.update()
     text.update()
+
 
 def alignment_slider_change(e, row, text, type="horizontal"):
     v = int(e.control.value)
@@ -56,7 +58,6 @@ def alignment_slider_change(e, row, text, type="horizontal"):
         5: ft.MainAxisAlignment.SPACE_AROUND,
         6: ft.MainAxisAlignment.SPACE_EVENLY,
     }
-
 
     if type == "horizontal":
         alignment = mapping_h.get(v, ft.MainAxisAlignment.START)
@@ -112,9 +113,8 @@ def row_wrap(page):
     has_wrap = ft.Checkbox(
         label="wrap",
         value=row.wrap,
-        on_change=lambda e:toggle_wrap(e, row, text),
+        on_change=lambda e: toggle_wrap(e, row, text),
     )
-
 
     return ft.Column(
         [
@@ -175,25 +175,23 @@ def row_alignment_vertical():
         ),
     ])
 
-def main(page: ft.Page):
-    page.title = "Row"
-    page.bgcolor = ft.Colors.BLUE_GREY_800
-    page.padding = 10
 
-    page.add(
-        ft.Column([
-            row_spacing(),
-            ft.Divider(),
-            row_wrap(page),
-            ft.Divider(),
-            row_alignment_horizontal(),
-            row_alignment_vertical(),
-        ],
+def build_view_row(page: ft.Page) -> ft.Container:
+    return ft.Container(
+        expand=True,
+        bgcolor=ft.Colors.BLUE_GREY_800,
+        padding=10,
+        content=ft.Column(
+            controls=[
+                row_spacing(),
+                ft.Divider(),
+                row_wrap(page),
+                ft.Divider(),
+                row_alignment_horizontal(),
+                row_alignment_vertical(),
+            ],
             spacing=30,
             scroll=ft.ScrollMode.AUTO,
             expand=True,
         )
     )
-
-
-ft.app(main)

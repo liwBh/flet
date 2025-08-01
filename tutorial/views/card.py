@@ -41,12 +41,15 @@ def create_card():
     )
 
 
-def main(page: ft.Page):
-    page.title = "Card Example"
-    page.theme_mode = ft.ThemeMode.LIGHT
-    page.add(
-        create_card(),
+def build_view_card() -> ft.Container:
+    return ft.Container(
+        expand=True,
+        bgcolor=ft.Colors.BLUE_GREY_800,
+        padding=10,
+        content=ft.Column(
+            controls=[
+                create_card(),
+            ]
+        )
     )
 
-
-ft.app(main)
