@@ -1,6 +1,5 @@
 import flet as ft
-
-
+import random
 def container_clickable():
     return ft.Column(
         [
@@ -56,9 +55,82 @@ def container_clickable():
             )],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
+def change_img(e, page, img_container):
+    index = random.randint(1, 1000)
+    img_container.image = ft.DecorationImage(
+        src=f"https://picsum.photos/250/250?random={index}"
+    )
+    index += 1
+    page.update()
+def container_blur(page):
+    img_container = ft.Container(
+        image=ft.DecorationImage(src="https://picsum.photos/250/250"),
+        width=250,
+        height=250,
+    )
+    stack = ft.Stack(
+        [
+            img_container,
+            ft.Container(
+                width=100,
+                height=100,
+                blur=10,
+                bgcolor="#22CCCC00",
+            ),
+            ft.Container(
+                width=100,
+                height=100,
+                left=20,
+                top=120,
+                blur=(0, 10),
+            ),
+            ft.Container(
+                top=50,
+                right=10,
+                blur=ft.Blur(10, 0, ft.BlurTileMode.MIRROR),
+                width=100,
+                height=100,
+                bgcolor="#44CCCCCC",
+                border_radius=10,
+                border=ft.border.all(2, ft.Colors.BLACK),
+            ),
+            ft.ElevatedButton(
+                text="Change Background",
+                bottom=5,
+                right=5,
+                style=ft.ButtonStyle(text_style=ft.TextStyle(size=8)),
+                on_click=lambda e: change_img(e, page, img_container),
+            ),
+        ]
+    )
+    return ft.Column(
+        [
+            ft.Text("Containers - blur"),
+            ft.Row(
+                [
+                    stack,
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+            )],
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+    )
+def on_hover(e):
+    e.control.bgcolor = "blue" if e.data == "true" else "red"
+    e.control.update()
+def container_hover():
+    return ft.Column(
+        [
+            ft.Text("Containers - hover"),
+            ft.Row(
+                [
+                    ft.Container(width=100, height=100, bgcolor="red", ink=False, on_hover=lambda e: on_hover(e)),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+            )],
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+    )
 
-
-def build_view_container() -> ft.Container:
+def build_view_container(page: ft.Page) -> ft.Container:
     return ft.Container(
         expand=True,
         bgcolor=ft.Colors.BLUE_GREY_800,
@@ -67,6 +139,9 @@ def build_view_container() -> ft.Container:
             controls=[
                 container_clickable(),
                 ft.Divider(),
+                container_blur(page),
+                ft.Divider(),
+                container_hover(),
             ],
             spacing=30,
             scroll=ft.ScrollMode.AUTO,

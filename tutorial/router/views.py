@@ -8,6 +8,6 @@ class Views:
         self.page = page
         self.views = [
             {"route": "/row", "view": build_view_row(page=self.page)},
-            {"route": "/container", "view": build_view_container()},
+            {"route": "/container", "view": build_view_container(page=self.page)},
             {"route": "/card", "view": build_view_card()},
         ]
