@@ -22,6 +22,8 @@ class NavBar(ft.Container):
             self.page.go("/card")
         elif idx == 3:
             self.page.go("/theme")
+        elif idx == 4:
+            self.page.go("/column")
 
 
     def navbar_bottom(self, page):
@@ -60,6 +62,9 @@ class NavBar(ft.Container):
                 ),
                 ft.NavigationDrawerDestination(
                     icon=ft.Icons.PALETTE, label="Theme"
+                ),
+                ft.NavigationDrawerDestination(
+                    icon=ft.Icons.VIEW_COLUMN, label="Column"
                 ),
             ],
             on_change=self.change_tab

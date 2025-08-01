@@ -22,7 +22,7 @@ class AppTutorial(ft.Container):
         self.page.appbar = self.appbar.appbar
         self.page.navigation_bar = self.navbar.nav_bottom_buttons
         self.page.on_route_change = lambda r: router(self, self.page.route, self.views)
-        self.page.go("/row")
+        self.page.go("/column")
 
 
 
