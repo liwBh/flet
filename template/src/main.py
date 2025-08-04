@@ -53,5 +53,10 @@ class AppTemplate(ft.Container):
     def redirect_navbar(self, e):
         self.page.go(e.control.data)
 
+    def layout_settings(self):
+        return {
+
+        }
+    
 if __name__ == "__main__":
     ft.app(target=AppTemplate, assets_dir="./assets")
