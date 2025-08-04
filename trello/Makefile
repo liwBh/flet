@@ -21,6 +21,9 @@ help: ## Mostrar esta ayuda
 requirements: ## Instalar dependencias
 	pip install -r requirements.txt
 
+web: ## Iniciar servidor web
+	flet run ./src/main.py --web
+
 
 ##--------------------------------------------------------
 ## Utilidades genéricas
