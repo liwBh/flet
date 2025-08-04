@@ -6,8 +6,8 @@ if TYPE_CHECKING:
 import itertools
 import flet as ft
 
-from controls.item import Item
-from data.data_store import DataStore
+from src.controls.item import Item
+from src.data.data_store import DataStore
 
 
 class BoardList(ft.Container):

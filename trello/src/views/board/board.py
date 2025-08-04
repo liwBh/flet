@@ -1,7 +1,7 @@
 import itertools
 import flet as ft
-from components.board.board_list import BoardList
-from data.data_store import DataStore
+from src.components.board.board_list import BoardList
+from src.data.data_store import DataStore
 
 class Board(ft.Container):
     id_counter = itertools.count()

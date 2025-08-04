@@ -1,5 +1,5 @@
 import flet as ft
-from .sidebar import Sidebar
+from src.components.layout.sidebar import Sidebar
 
 class Layout(ft.Row):
     def __init__(self, navbar, page: ft.Page, *args, **kwargs):

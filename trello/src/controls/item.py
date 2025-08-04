@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from board_list import BoardList
 import itertools
 import flet as ft
-from data_store import DataStore
+from src.data.data_store import DataStore
 
 
 class Item(ft.Container):
