@@ -11,26 +11,26 @@ class AppTemplate(ft.Container):
         self.views = Views(page=self.page).views
         self.navbar = Navbar(page, settings=self.navbar_settings())
         self.layout = Layout(self.navbar, page, self.layout_settings())
-        container = ft.Container(
+        self.layout_container = ft.Container(
             bgcolor=ft.Colors.WHITE,
             content=self.layout,
             expand=True,
             alignment=ft.alignment.top_center,
         )
-        page.add(container)
+        self.page.add(self.layout_container)
         page.update()
         self.build_view()
 
     def build_view(self):
         self.page.title = "Template"
         self.page.padding = 0
-        self.page.bgcolor = ft.Colors.BLUE_GREY_500
+        self.page.bgcolor = ft.Colors.WHITE
         self.page.theme = ft.Theme(font_family="Verdana")
         self.page.theme_mode = ft.ThemeMode.LIGHT
         self.page.theme.page_transitions.windows = ft.PageTransitionTheme.CUPERTINO
         self.page.fonts = {"Pacifico": "./fonts/Pacifico-Regular.ttf"}
-        self.page.on_route_change = lambda r: router(self, self.page.route, self.views, self.layout)
-        self.page.go("/")
+        self.page.on_route_change = lambda r: router(self, self.page.route, self.views)
+        self.page.go("/login")
 
     def navbar_settings(self):
         return {
