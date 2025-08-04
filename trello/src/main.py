@@ -1,6 +1,7 @@
 import flet as ft
 from components.layout.navbar import Navbar
 from components.layout.layout import Layout
+from controls.router import route_change
 
 def main(page: ft.Page):
     # settings
@@ -14,6 +15,7 @@ def main(page: ft.Page):
 
     navbar = Navbar(page)
     layout = Layout(navbar, page)
+    page.on_route_change = lambda r: route_change(r, layout)
     container = ft.Container(
         content=layout,
         expand=True,

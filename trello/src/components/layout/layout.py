@@ -1,5 +1,5 @@
 import flet as ft
-from src.components.layout.sidebar import Sidebar
+from components.layout.sidebar import Sidebar
 
 class Layout(ft.Row):
     def __init__(self, navbar, page: ft.Page, *args, **kwargs):
@@ -25,6 +25,25 @@ class Layout(ft.Row):
     def active_view(self, view):
         self._active_view = view
         self.update()
+
+    def set_board_view(self, i):
+        #self.active_view = self.store.get_boards()[i]
+        self.sidebar.top_nav_rail.selected_index = None
+        self.page_resize()
+        self.page.update()
+        pass
+
+    def set_all_boards_view(self):
+        #self.active_view = self.all_boards_view
+        #self.hydrate_all_boards_view()
+        self.sidebar.top_nav_rail.selected_index = 0
+        self.page.update()
+
+
+    def set_members_view(self):
+        #self.active_view = self.members_view
+        self.sidebar.top_nav_rail.selected_index = 1
+        self.page.update()
 
     def toggle_nav_rail(self, e):
         self.sidebar.visible = not self.sidebar.visible

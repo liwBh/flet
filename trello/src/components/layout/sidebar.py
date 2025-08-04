@@ -71,6 +71,11 @@ class Sidebar(ft.Container):
         )
 
     def top_nav_change(self, e):
-        self.top_nav_rail.selected_index = e.control.selected_index
-        self.update()
+        index = e if (type(e) == int) else e.control.selected_index
+        self.top_nav_rail.selected_index = index
+        if index == 0:
+            self.app_layout.page.route = "/boards"
+        elif index == 1:
+            self.app_layout.page.route = "/members"
+        self.app_layout.page.update()
 
