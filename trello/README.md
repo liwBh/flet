@@ -1,4 +1,5 @@
 # Trello
+Aplicación tipo Trello construida con [Flet](https://flet.dev/), diseñada para la creación, organización y gestión de tarjetas y tableros de tareas.
 
 ---
 ## 📋 Tabla de Contenidos
@@ -13,7 +14,6 @@
 
 ---
 ## 🚀 Características
-Aplicación tipo Trello construida con [Flet](https://flet.dev/), diseñada para la creación, organización y gestión de tarjetas y tableros de tareas.
 
 - Creación y edición de tarjetas.
 - Organización en columnas/tableros.
