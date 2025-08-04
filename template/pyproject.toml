@@ -1,7 +1,7 @@
 [project]
-name = "Trello"
+name = "Template"
 version = "0.1.0"
-description = "Aplicación de Trello"
+description = "Aplicación de Template"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
@@ -17,12 +17,12 @@ dependencies = [
 
 [tool.flet]
 org = "https://solvosoft.com/es/"
-product = "Trello"
+product = "Template"
 company = "Solvo"
 copyright = "Copyright (C) 2025 by Solvo"
 
 [tool.flet.app]
 # ruta al directorio donde está main.py
 path = "./src/main.py"
-name = "Trello"
+name = "Template"
 icon = "./assets/image/icon.png"

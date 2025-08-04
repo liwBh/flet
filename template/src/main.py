@@ -4,7 +4,7 @@ from components.layout.layout import Layout
 
 def main(page: ft.Page):
     # settings
-    page.title = "Flet Trello clone"
+    page.title = "Template"
     page.padding = 0
     page.bgcolor = ft.Colors.BLUE_GREY_500
     page.theme = ft.Theme(font_family="Verdana")
@@ -12,8 +12,23 @@ def main(page: ft.Page):
     page.theme.page_transitions.windows = ft.PageTransitionTheme.CUPERTINO
     page.fonts = {"Pacifico": "./fonts/Pacifico-Regular.ttf"}
 
-    navbar = Navbar(page)
-    layout = Layout(navbar, page)
+    navbar_settings = {
+        "title": "Template",
+        "color_bg": ft.Colors.LIGHT_BLUE_ACCENT_700,
+        "color_text": ft.Colors.WHITE,
+        "items": [
+            ft.PopupMenuItem(text="Login"),
+            ft.PopupMenuItem(),  # divider
+            ft.PopupMenuItem(text="Profile"),
+            ft.PopupMenuItem(),  # divider
+            ft.PopupMenuItem(text="Settings")
+        ]
+    }
+    layout_settings = {
+
+    }
+    navbar = Navbar(page, settings=navbar_settings)
+    layout = Layout(navbar, page, layout_settings)
     container = ft.Container(
         content=layout,
         expand=True,

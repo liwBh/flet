@@ -1,22 +1,18 @@
 import flet as ft
 
 class Navbar:
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page, settings: dict):
         self.page = page
         self.action = None
-        self.appbar_items = [
-            ft.PopupMenuItem(text="Login"),
-            ft.PopupMenuItem(),  # divider
-            ft.PopupMenuItem(text="Settings")
-        ]
+        self.appbar_items = settings.get("items", [])
         self.appbar = ft.AppBar(
 
             leading=ft.IconButton(icon=ft.Icons.MENU),
             leading_width=100,
-            title=ft.Text("Trello", size=32, text_align=ft.TextAlign.START),
+            title=ft.Text(settings.get("title"), size=32, color=settings.get("color_text"), text_align=ft.TextAlign.START),
             center_title=False,
             toolbar_height=75,
-            bgcolor=ft.Colors.LIGHT_BLUE_ACCENT_700,
+            bgcolor=settings.get("color_bg"),
             actions=[
                 ft.Container(
                     content=ft.PopupMenuButton(
