@@ -1,4 +1,7 @@
 import flet as ft
+from components.layout.navbar import Navbar
+from components.layout.layout import Layout
+from components.layout.footer import Footer
 
 
 def router(self, route, views):
@@ -17,14 +20,12 @@ def router(self, route, views):
             self.navbar = Navbar(self.page, settings=self.navbar_settings())
             self.page.appbar = self.navbar.appbar
             self.layout = Layout(self.navbar, self.page, self.layout_settings())
-            self.layout_container = ft.Container(
-                content=self.layout,
-                expand=True,
-                alignment=ft.alignment.top_center,
-            )
+            self.layout_container = self.create_layout()
             self.page.controls.clear()
             self.page.appbar = self.navbar.appbar
             self.page.add(self.layout_container)
+
+
         elif self.layout_container not in self.page.controls:
             self.page.controls.clear()
             self.page.appbar = self.navbar.appbar
