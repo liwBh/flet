@@ -1,5 +1,6 @@
-# Trello
-Aplicación tipo Trello construida con [Flet](https://flet.dev/), diseñada para la creación, organización y gestión de tarjetas y tableros de tareas.
+# Template
+Aplicación tipo Template construida con [Flet](https://flet.dev/), 
+es una plantilla para crear una aplicación con Flet.
 
 ---
 ## 📋 Tabla de Contenidos
@@ -15,9 +16,7 @@ Aplicación tipo Trello construida con [Flet](https://flet.dev/), diseñada para
 ---
 ## 🚀 Características
 
-- Creación y edición de tarjetas.
-- Organización en columnas/tableros.
-- Almacenamiento en memoria o persistente.
+- En enrutamiento de vistas.
 - Arquitectura modular y extensible.
 - Interfaz moderna y responsiva con Flet.
 
@@ -32,7 +31,7 @@ Aplicación tipo Trello construida con [Flet](https://flet.dev/), diseñada para
 
    ```bash
       git clone [https://github.com/liwBh/flet.git](https://github.com/liwBh/flet.git)
-      cd trello
+      cd template
    ```
 
 2. Crea y activa un entorno virtual:
