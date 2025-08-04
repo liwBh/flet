@@ -1,5 +1,7 @@
 import flet as ft
 
+from controls.router.views import Views
+
 class Sidebar(ft.Container):
 
     def __init__(self, app_layout): #, store: DataStore):
@@ -8,17 +10,12 @@ class Sidebar(ft.Container):
         self.nav_rail_visible = True
         self.top_nav_items = [
             ft.NavigationRailDestination(
-                label_content=ft.Text("Boards"),
-                label="Boards",
-                icon=ft.Icons.BOOK_OUTLINED,
-                selected_icon=ft.Icons.BOOK_OUTLINED,
-            ),
-            ft.NavigationRailDestination(
-                label_content=ft.Text("Members"),
-                label="Members",
-                icon=ft.Icons.PERSON,
-                selected_icon=ft.Icons.PERSON,
-            ),
+                label_content=ft.Text(v.name),
+                label=v.name,
+                icon=v.icon,
+                selected_icon=v.icon,
+                data=v.route,
+            ) for v in Views(self.app_layout.page).views if v.position == 1
         ]
 
         self.top_nav_rail = ft.NavigationRail(
@@ -26,9 +23,9 @@ class Sidebar(ft.Container):
             label_type=ft.NavigationRailLabelType.ALL,
             on_change=self.top_nav_change,
             destinations=self.top_nav_items,
-            bgcolor=ft.Colors.BLUE_GREY,
+            bgcolor=ft.Colors.GREY_200,
             extended=True,
-            height=110,
+            height=55*len(self.top_nav_items),
         )
 
         self.toggle_nav_rail_button = ft.IconButton(ft.Icons.ARROW_BACK)
@@ -38,13 +35,12 @@ class Sidebar(ft.Container):
                 [
                     ft.Row(
                         [
-                            ft.Text("Workspace"),
+                            ft.Text("Panel"),
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     ),
                     # divider
                     ft.Container(
-                        bgcolor=ft.Colors.BLACK26,
                         border_radius=ft.border_radius.all(30),
                         height=1,
                         alignment=ft.alignment.center_right,
@@ -53,7 +49,6 @@ class Sidebar(ft.Container):
                     self.top_nav_rail,
                     # divider
                     ft.Container(
-                        bgcolor=ft.Colors.BLACK26,
                         border_radius=ft.border_radius.all(30),
                         height=1,
                         alignment=ft.alignment.center_right,
@@ -65,7 +60,7 @@ class Sidebar(ft.Container):
             padding=ft.padding.all(15),
             margin=ft.margin.all(0),
             width=250,
-            bgcolor=ft.Colors.BLUE_GREY,
+            bgcolor=ft.Colors.GREY_200,
             visible=self.nav_rail_visible,
             alignment=ft.alignment.top_center,
         )
@@ -73,4 +68,6 @@ class Sidebar(ft.Container):
     def top_nav_change(self, e):
         self.top_nav_rail.selected_index = e.control.selected_index
         self.update()
+        route = self.top_nav_rail.destinations[e.control.selected_index].data
+        self.app_layout.page.go(route)
 
