@@ -38,7 +38,7 @@ def build_view_login(page: ft.Page) -> ft.Container:
                     width=150,
                     height=150,
                 ),
-                ft.Text("Login", color=ft.Colors.BLACK, size=20),
+                ft.Text("Login",size=20),
                 form_login(page),
             ],
             alignment=ft.MainAxisAlignment.CENTER,

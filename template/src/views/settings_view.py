@@ -1,6 +1,6 @@
 import flet as ft
-from src.components.shared.color_picker import color_picker
-from src.controls.handler.handler_settings import on_color_change, change_theme_mode
+from components.shared.color_picker import color_picker
+from controls.handler.handler_settings import on_color_change, change_theme_mode
 
 def build_view_settings(page: ft.Page) -> ft.Container:
     # page.theme = ft.Theme(
@@ -25,10 +25,9 @@ def build_view_settings(page: ft.Page) -> ft.Container:
 
     return ft.Container(
         expand=True,
-        bgcolor=ft.Colors.WHITE,
         content=ft.Column(
             controls=[
-                ft.Text("Settings", color=ft.Colors.BLACK, size=20),
+                ft.Text("Settings", size=20),
                 settings,
             ],
             alignment=ft.alignment.center,

@@ -1,6 +1,6 @@
 import flet as ft
-from src.controls.utils import random_image_url
-from src.components.shared.carousel import Carousel
+from controls.utils import random_image_url
+from components.shared.carousel import Carousel
 
 def build_view_home(page: ft.Page) -> ft.Container:
     carousel_images = [

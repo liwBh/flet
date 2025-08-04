@@ -18,7 +18,6 @@ def router(self, route, views):
             self.page.appbar = self.navbar.appbar
             self.layout = Layout(self.navbar, self.page, self.layout_settings())
             self.layout_container = ft.Container(
-                bgcolor=ft.Colors.WHITE,
                 content=self.layout,
                 expand=True,
                 alignment=ft.alignment.top_center,

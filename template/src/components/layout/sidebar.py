@@ -23,7 +23,6 @@ class Sidebar(ft.Container):
             label_type=ft.NavigationRailLabelType.ALL,
             on_change=self.top_nav_change,
             destinations=self.top_nav_items,
-            bgcolor=ft.Colors.GREY_200,
             extended=True,
             height=55*len(self.top_nav_items),
         )
@@ -41,7 +40,6 @@ class Sidebar(ft.Container):
                     ),
                     # divider
                     ft.Container(
-                        bgcolor=ft.Colors.BLACK26,
                         border_radius=ft.border_radius.all(30),
                         height=1,
                         alignment=ft.alignment.center_right,
@@ -61,7 +59,6 @@ class Sidebar(ft.Container):
             padding=ft.padding.all(15),
             margin=ft.margin.all(0),
             width=250,
-            bgcolor=ft.Colors.GREY_200,
             visible=self.nav_rail_visible,
             alignment=ft.alignment.top_center,
         )
