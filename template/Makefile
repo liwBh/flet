@@ -24,6 +24,15 @@ requirements: ## Instalar dependencias
 web: ## Iniciar servidor web
 	flet run ./src/main.py --web
 
+init_db: ## Inicializar base de datos
+	PYTHONPATH=src python src/scripts/init_db.py create_db
+
+reset_db: ## Eliminar y volver a crear todas las tablas (pierdes datos)
+	PYTHONPATH=src python src/scripts/init_db.py reset_db
+
+update_schema: ## Actualizar esquema de la base de datos
+	PYTHONPATH=src python src/scripts/init_db.py update_schema
+
 
 ##--------------------------------------------------------
 ## Utilidades genéricas
