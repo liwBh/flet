@@ -35,12 +35,13 @@ class Sidebar(ft.Container):
                 [
                     ft.Row(
                         [
-                            ft.Text("Panel"),
+                            ft.Text("Panel", weight=ft.FontWeight.BOLD),
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     ),
                     # divider
                     ft.Container(
+                        bgcolor=ft.Colors.BLACK26,
                         border_radius=ft.border_radius.all(30),
                         height=1,
                         alignment=ft.alignment.center_right,

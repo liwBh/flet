@@ -1,14 +1,25 @@
-
 import flet as ft
+from src.controls.utils import random_image_url
+from src.components.shared.carousel import Carousel
 
 def build_view_home(page: ft.Page) -> ft.Container:
+    carousel_images = [
+        random_image_url(width=600, height=400),
+        random_image_url(width=600, height=400),
+        random_image_url(width=600, height=400),
+        random_image_url(width=600, height=400),
+        random_image_url(width=600, height=400),
+    ]
+
+    carousel = Carousel(carousel_images, auto_play=True, interval=5, width=page.width, height=400)
+    carousel.start_autoplay(page)
+
     return ft.Container(
         expand=True,
-        bgcolor=ft.Colors.WHITE,
-        padding=10,
         content=ft.Column(
             controls=[
-                ft.Text("Casita", color=ft.Colors.BLACK, size=20),
+                ft.Text("Home", size=20),
+                carousel,
             ],
             alignment=ft.alignment.center,
         )

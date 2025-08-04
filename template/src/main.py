@@ -8,6 +8,13 @@ class AppTemplate(ft.Container):
     def __init__(self, page):
         super().__init__()
         self.page = page
+        self.page.title = "Template"
+        self.page.padding = 0
+        self.page.theme_mode = ft.ThemeMode.LIGHT
+        self.page.theme = ft.Theme(font_family="Verdana", color_scheme_seed=ft.Colors.BLUE_GREY_500)
+        self.page.theme.page_transitions.windows = ft.PageTransitionTheme.CUPERTINO
+        self.page.fonts = {"Pacifico": "./fonts/Pacifico-Regular.ttf"}
+
         self.views = Views(page=self.page).views
         self.navbar = Navbar(page, settings=self.navbar_settings())
         self.layout = Layout(self.navbar, page, self.layout_settings())
@@ -45,11 +52,6 @@ class AppTemplate(ft.Container):
 
     def redirect_navbar(self, e):
         self.page.go(e.control.data)
-
-    def layout_settings(self):
-        return {
-
-        }
 
 if __name__ == "__main__":
     ft.app(target=AppTemplate, assets_dir="./assets")

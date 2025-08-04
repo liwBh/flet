@@ -1,14 +1,10 @@
-import random
 from src.data.models.product import Product
 from src.data.manager.db_manager import DatabaseManager
+from src.controls.utils import random_image_url
 
 class ProductManager:
     def __init__(self):
         self.dbm = DatabaseManager()
-
-    def _random_image_url(self):
-        id = random.randint(1, 1000)
-        return f"https://picsum.photos/seed/{id}/300/200"
 
     def create_product(self, code: str, name: str, price: float):
         db = self.dbm.get_session()
@@ -16,7 +12,7 @@ class ProductManager:
             if db.query(Product).filter(Product.code == code).first():
                 raise ValueError("Código ya registrado")
 
-            image = self._random_image_url()
+            image = random_image_url()
             product = Product(code=code, name=name, price=price, image=image)
             db.add(product)
             db.commit()

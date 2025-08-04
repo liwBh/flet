@@ -4,6 +4,8 @@ import flet as ft
 from dataclasses import dataclass
 from views.home_view import build_view_home
 from views.login import build_view_login
+from views.settings_view import build_view_settings
+
 
 position = {
     "top": 0,
@@ -27,5 +29,5 @@ class Views:
             RouteView("Members", "/members", ft.Icons.PERSON, ft.Container(content=ft.Text("Members")), position["side"]),
             RouteView("Login", "/login", ft.Icons.LOGIN, build_view_login(page), position["top"]),
             RouteView("Profile", "/profile", ft.Icons.PERSON, ft.Container(content=ft.Text("Profile")), position["top"]),
-            RouteView("Settings", "/settings", ft.Icons.SETTINGS, ft.Container(content=ft.Text("Settings")), position["top"]),
+            RouteView("Settings", "/settings", ft.Icons.SETTINGS, build_view_settings(page), position["top"]),
         ]
