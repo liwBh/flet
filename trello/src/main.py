@@ -6,9 +6,9 @@ def main(page: ft.Page):
     page.title = "Flet Trello clone"
     page.padding = 0
     page.bgcolor = ft.Colors.BLUE_GREY_500
-    Navbar(page)
-    app = Navbar(page)
-    layout = Layout(app, page)
+
+    navbar = Navbar(page)
+    layout = Layout(navbar, page)
     container = ft.Container(
         content=layout,
         expand=True,
