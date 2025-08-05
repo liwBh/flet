@@ -33,7 +33,7 @@ def build_view_login(page: ft.Page) -> ft.Container:
             controls=[
                 ft.Container(
                   ft.Image(
-                    src="assets/image/icon.png",
+                    src="image/icon.png",
                   ),
                     width=150,
                     height=150,

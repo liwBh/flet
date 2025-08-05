@@ -37,7 +37,6 @@ class AppTemplate(ft.Container):
             alignment=ft.alignment.top_center,
         )
 
-
     def build_view(self):
         self.page.on_route_change = lambda r: router(self, self.page.route, self.views)
         self.page.go("/login")
@@ -63,4 +62,4 @@ class AppTemplate(ft.Container):
         }
     
 if __name__ == "__main__":
-    ft.app(target=AppTemplate, assets_dir="./assets")
+    ft.app(target=AppTemplate, assets_dir="src/assets")
