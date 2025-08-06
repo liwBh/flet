@@ -20,6 +20,28 @@ class ProductManager:
         finally:
             self.dbm.close_session(db)
 
+    def update_product(self, id: int, code: str, name: str, price: float, image: str):
+        db = self.dbm.get_session()
+        try:
+            product = db.query(Product).filter(Product.id == id).first()
+            if not product:
+                raise ValueError("Producto no encontrado")
+
+            existing = db.query(Product).filter(Product.code == code, Product.id != id).first()
+            if existing:
+                raise ValueError("Código ya registrado por otro producto")
+
+            product.code = code
+            product.name = name
+            product.price = price
+            product.image = image
+
+            db.commit()
+            db.refresh(product)
+            return product
+        finally:
+            self.dbm.close_session(db)
+
     def get_all_products(self):
         db = self.dbm.get_session()
         try:

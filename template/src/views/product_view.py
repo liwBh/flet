@@ -5,6 +5,7 @@ import shutil
 from controls.product.product_control import ProductControl
 from controls.product.product_form import ProductForm
 
+
 class ProductView:
     def __init__(self, page: ft.Page):
         self.page = page
@@ -17,6 +18,7 @@ class ProductView:
         self.image_display = ft.Text("Ninguna imagen seleccionada")
         self.file_picker = ft.FilePicker(on_result=self.on_image_selected)
         self.page.overlay.append(self.file_picker)
+        self.product_to_delete = None
 
         self.image_picker_controls = ft.Row(
             controls=[
@@ -50,6 +52,18 @@ class ProductView:
             actions_alignment=ft.MainAxisAlignment.END,
         )
 
+        self.confirm_dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("¿Eliminar producto?"),
+            content=ft.Text(f"¿Estás seguro de que deseas eliminar el producto?"),
+            actions=[
+                ft.TextButton("Cancelar", on_click=lambda e: self.cancel_delete()),
+                ft.TextButton("Eliminar", on_click= self.confirm_delete),
+            ],
+            actions_alignment=ft.MainAxisAlignment.END,
+        )
+
+        self.page.overlay.append(self.confirm_dialog)
         self.page.overlay.append(self.dialog)
 
     def on_add_product(self, e):
@@ -58,12 +72,41 @@ class ProductView:
         self.dialog.open = True
         self.page.update()
 
+    def confirm_delete(self, e):
+        product = self.product_to_delete
+        if product:
+            try:
+                self.product_control.delete_product(product.id)
+                self.products = [p for p in self.products if p.id != product.id]
+                self.product_list_container.controls = self.build_product_cards()
+                self.product_list_container.update()
+            except Exception as ex:
+                print(f"Error al eliminar producto: {ex}")
+            finally:
+                self.product_to_delete = None
+
+        self.confirm_dialog.open = False
+        self.page.dialog = None
+        self.page.update()
+
+    def cancel_delete(self):
+        self.confirm_dialog.open = False
+        self.page.dialog = None
+        self.page.update()
+
+    def on_delete_product(self, product):
+        self.product_to_delete = product
+        self.page.dialog = self.confirm_dialog
+        self.confirm_dialog.open = True
+        self.page.update()
+
     def on_select_product(self, product):
         self.clear_form()
+        self.form.id = product.id
         self.form.name_field.value = product.name
         self.form.code_field.value = product.code
         self.form.price_field.value = str(product.price)
-        self.form.image_display.value = f"Seleccionada: {product.image}"
+        self.form.image_picker_controls.controls[1].value = f"Seleccionada: {product.image}"
         self.dialog.open = True
         self.page.update()
         self.selected_product = product
@@ -85,11 +128,17 @@ class ProductView:
         self.page.update()
 
     def submit_product(self, e):
-
         if self.form.validate_form():
             try:
                 product = self.form.product
-                self.products.append(self.product_control.create_product(product.name, product.code, product.price, product.image))
+                if product.id == 0:
+                    self.products.append(
+                        self.product_control.create_product(product.name, product.code, product.price, product.image))
+                else:
+                    product = self.product_control.update_product(product.id, product.name, product.code, product.price,
+                                                                  product.image)
+                    self.products = [p for p in self.products if p.id !=  product.id]
+                    self.products.append(product)
                 self.dialog.open = False
                 self.product_list_container.controls = self.build_product_cards()
                 self.product_list_container.update()
@@ -100,7 +149,7 @@ class ProductView:
                 self.page.update()
             try:
                 os.makedirs("src/assets/image", exist_ok=True)
-                shutil.copy(self.selected_image_path, os.path.join("src/assets/image", image_name))
+                shutil.copy(self.form.selected_image_path, os.path.join("src/assets/image", self.form.image_picker_controls.controls[1].value))
             except Exception as ex:
                 print(f"Error al copiar imagen: {ex}")
             self.page.update()
@@ -125,6 +174,22 @@ class ProductView:
                                 ft.Text(product.name, size=16, weight=ft.FontWeight.BOLD),
                                 ft.Text(f"${product.price:.2f}", size=14),
                                 ft.Text(product.code, size=12, color=ft.Colors.GREY_600),
+                                ft.Row(
+                                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                                    controls=[
+                                        ft.IconButton(
+                                            icon=ft.Icons.EDIT,
+                                            tooltip="Editar",
+                                            on_click=lambda e, p=product: self.on_select_product(p)
+                                        ),
+                                        ft.IconButton(
+                                            icon=ft.Icons.DELETE,
+                                            tooltip="Eliminar",
+                                            icon_color=ft.Colors.RED,
+                                            on_click=lambda e, p=product: self.on_delete_product(p)
+                                        ),
+                                    ]
+                                )
                             ],
                             spacing=5,
                             alignment=ft.MainAxisAlignment.START,
@@ -135,7 +200,7 @@ class ProductView:
                     )
                 ),
                 width=320,
-                height=360,
+                height=380,
                 padding=5,
             )
             for product in self.products

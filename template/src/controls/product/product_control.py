@@ -10,3 +10,9 @@ class ProductControl:
 
     def create_product(self, name, code, price, image):
         return self.manager.create_product(code, name, price, image)
+
+    def update_product(self, id, name, code, price, image):
+        return self.manager.update_product(id, code, name, price, image)
+
+    def delete_product(self, id):
+        return self.manager.delete_product(id)

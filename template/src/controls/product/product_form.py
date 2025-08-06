@@ -11,6 +11,7 @@ class ProductForm:
         self.image_picker_controls = image_picker_controls
         self.price_field = price_field
         self.selected_image_path = ""
+        self.id = 0
         self.product = None
 
     def get_inputs(self):
@@ -49,8 +50,10 @@ class ProductForm:
         except ValueError:
             self.price_field.error_text = ft.Text("El precio debe ser un número positivo", color=ft.Colors.RED)
             return False
-
-        self.product = Product(code=code, name=name, price=price, image=image_name)
+        id = 0
+        if self.id != 0:
+            id = self.id
+        self.product = Product(id=id, code=code, name=name, price=price, image=image_name)
         return True
 
     def on_image_selected(self, e: ft.FilePickerResultEvent):
@@ -62,3 +65,4 @@ class ProductForm:
         else:
             self.selected_image_path = ""
             self.image_picker_controls.controls[1].value = "Ninguna imagen seleccionada"
+
