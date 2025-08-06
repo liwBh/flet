@@ -2,19 +2,19 @@ import flet as ft
 import os
 import shutil
 
-from controls.product_control import ProductControl
+from controls.product.product_control import ProductControl
+from controls.product.product_form import ProductForm
 
 class ProductView:
     def __init__(self, page: ft.Page):
         self.page = page
         self.product_control = ProductControl()
         self.products = []
+        self.selected_product = None
         self.name_field = ft.TextField(label="Nombre del producto")
         self.code_field = ft.TextField(label="Código del producto")
         self.price_field = ft.TextField(label="Precio", keyboard_type=ft.KeyboardType.NUMBER)
-        self.selected_image_path = ""
         self.image_display = ft.Text("Ninguna imagen seleccionada")
-
         self.file_picker = ft.FilePicker(on_result=self.on_image_selected)
         self.page.overlay.append(self.file_picker)
 
@@ -33,16 +33,13 @@ class ProductView:
             spacing=10
         )
 
+        self.form = ProductForm(self.name_field, self.code_field, self.image_picker_controls, self.price_field)
+
         self.dialog = ft.AlertDialog(
             modal=True,
             title=ft.Text("Agregar nuevo producto"),
             content=ft.Column(
-                controls=[
-                    self.name_field,
-                    self.code_field,
-                    self.image_picker_controls,
-                    self.price_field,
-                ],
+                controls=self.form.get_inputs(),
                 tight=True,
                 spacing=10
             ),
@@ -61,81 +58,54 @@ class ProductView:
         self.dialog.open = True
         self.page.update()
 
+    def on_select_product(self, product):
+        self.clear_form()
+        self.form.name_field.value = product.name
+        self.form.code_field.value = product.code
+        self.form.price_field.value = str(product.price)
+        self.form.image_display.value = f"Seleccionada: {product.image}"
+        self.dialog.open = True
+        self.page.update()
+        self.selected_product = product
+
     def close_dialog(self):
         self.dialog.open = False
         self.page.update()
 
     def clear_form(self):
-        self.name_field.value = ""
-        self.code_field.value = ""
-        self.price_field.value = ""
-        self.selected_image_path = ""
+        self.form.name_field.value = ""
+        self.form.code_field.value = ""
+        self.form.price_field.value = ""
+        self.form.selected_image_path = ""
         self.image_display.value = "Ninguna imagen seleccionada"
         self.page.update()
 
     def on_image_selected(self, e: ft.FilePickerResultEvent):
-        if e.files:
-            self.selected_image_path = e.files[0].path
-            file_name = os.path.basename(self.selected_image_path)
-            self.image_display.value = f"Seleccionada: {file_name}"
-        else:
-            self.selected_image_path = ""
-            self.image_display.value = "Ninguna imagen seleccionada"
+        self.form.on_image_selected(e)
         self.page.update()
-
-    def get_selected_image_name(self):
-        return os.path.basename(self.selected_image_path) if self.selected_image_path else ""
 
     def submit_product(self, e):
-        for control in [self.name_field, self.code_field, self.price_field]:
-            control.error_text = ""
 
-        name = self.name_field.value.strip()
-        code = self.code_field.value.strip()
-        image_name = self.get_selected_image_name()
-        price = self.price_field.value.strip()
-
-        if not name:
-            self.name_field.error_text = "Este campo es obligatorio"
+        if self.form.validate_form():
+            try:
+                product = self.form.product
+                self.products.append(self.product_control.create_product(product.name, product.code, product.price, product.image))
+                self.dialog.open = False
+                self.product_list_container.controls = self.build_product_cards()
+                self.product_list_container.update()
+                self.page.update()
+            except Exception as ex:
+                print(f"Error al agregar producto: {ex}")
+                self.dialog.title = ft.Text(ex, color=ft.Colors.RED)
+                self.page.update()
+            try:
+                os.makedirs("src/assets/image", exist_ok=True)
+                shutil.copy(self.selected_image_path, os.path.join("src/assets/image", image_name))
+            except Exception as ex:
+                print(f"Error al copiar imagen: {ex}")
             self.page.update()
-            return
-        if not code:
-            self.code_field.error_text = "Este campo es obligatorio"
+        else:
             self.page.update()
-            return
-        if not price:
-            self.price_field.error_text = "Este campo es obligatorio"
-            self.page.update()
-            return
-        if not image_name:
-            self.image_display.value = "Ninguna imagen seleccionada"
-            self.page.update()
-            return
-
-        try:
-            price_value = float(price)
-            if price_value < 0:
-                raise ValueError
-        except ValueError:
-            self.price_field.error_text = ft.Text("El precio debe ser un número positivo", color=ft.Colors.RED)
-            self.page.update()
-            return
-        try:
-            self.products.append(self.product_control.create_product(name, code, price_value, image_name))
-            self.dialog.open = False
-            self.product_list_container.controls = self.build_product_cards()
-            self.product_list_container.update()
-            self.page.update()
-        except Exception as ex:
-            print(f"Error al agregar producto: {ex}")
-            self.dialog.title = ft.Text(ex, color=ft.Colors.RED)
-            self.page.update()
-        try:
-            os.makedirs("src/assets/image", exist_ok=True)
-            shutil.copy(self.selected_image_path, os.path.join("src/assets/image", image_name))
-        except Exception as ex:
-            print(f"Error al copiar imagen: {ex}")
-        self.page.update()
 
     def build_product_cards(self):
         self.products = self.product_control.get_all_products()
