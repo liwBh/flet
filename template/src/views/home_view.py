@@ -22,5 +22,7 @@ def build_view_home(page: ft.Page) -> ft.Container:
                 carousel,
             ],
             alignment=ft.alignment.center,
-        )
+        ),
+        alignment=ft.alignment.center,
+        padding=10,
     )
